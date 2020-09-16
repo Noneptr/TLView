@@ -22,8 +22,8 @@ class TLTableModel(QAbstractTableModel):
     def __init__(self):
         super().__init__()
         self.net_connections = []
-        self.sortColumn = 0         # sorted column number
-        self.sortASC = False        # ascending sort?
+        self.sortColumn = 1         # sorted column number
+        self.sortASC = False  # ascending sort?
         self.updateData()
 
     @Slot()
@@ -32,14 +32,14 @@ class TLTableModel(QAbstractTableModel):
          * 1. load system data about all network connections on taransport layer
          * 2. create data table
         """
-        psutilAddrToIPAndPort = lambda paddr: (paddr.ip, str(paddr.port))\
+        psutilAddrToIPAndPort = lambda paddr: (paddr.ip, paddr.port)\
             if type(paddr) != tuple else ('*', '*')
         statusBadValToGoodVal = lambda val: '' if val == 'NONE' else val
         self.net_connections = []
         # create data table
         for connection in psutil.net_connections():
             process = psutil.Process(connection.pid)
-            row = [process.name(), str(connection.pid),
+            row = [process.name(), connection.pid,
                    nameTransportProtocol(connection.family, connection.type),
                    *psutilAddrToIPAndPort(connection.laddr),
                    *psutilAddrToIPAndPort(connection.raddr),
@@ -85,7 +85,7 @@ class TLTableModel(QAbstractTableModel):
         if role == Qt.DisplayRole:
             if row >= 0 and row < self.rowCount() \
                     and column >= 0 and column < self.columnCount():
-                    return self.net_connections[row][column]
+                    return str(self.net_connections[row][column])
         elif role == Qt.BackgroundRole:
             return QColor(Qt.white)
         elif role == Qt.TextAlignmentRole:
