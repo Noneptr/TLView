@@ -6,6 +6,13 @@ from PySide2.QtCore import QTimer, Slot, Signal, QThread, Qt
 
 TIMER_VALUES = (1000, 3000, 5000)
 
+
+def slot_kill_process():
+    pass
+
+def slot_whois_domain():
+    pass
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -47,4 +54,6 @@ class MainWindow(QMainWindow):
         whoisAction = QAction("Whois...", self)
         menu.addAction(killAction)
         menu.addAction(whoisAction)
+        killAction.triggered.connect(slot_kill_process)
+        whoisAction.triggered.connect(slot_whois_domain)
         menu.popup(self.ui.tableView.viewport().mapToGlobal(pos))
