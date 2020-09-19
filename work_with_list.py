@@ -37,3 +37,4 @@ def updated_rows(old_table: list, new_table: list, indexes_id: tuple, indexes_cm
             if not lists_are_diff(old_table[i], new_table[j], *indexes_id) and \
                     lists_are_diff(old_table[i], new_table[j], *indexes_cmp):
                 answer.append(old_table[i])
+    return answer
