@@ -163,7 +163,7 @@ class CacheDomainNames:
                        of threads is equal to the number of logical cores
                True - function run in new thread"""
         if len(self.__threads) < self.__MAX_COUNT_THREADS:
-            thread = threading.Thread(target=func, args=args)
+            thread = threading.Thread(target=func, args=args, daemon=True)
             thread.work = args
             self.__threads.append(thread)
             thread.start()
