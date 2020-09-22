@@ -244,8 +244,7 @@ class TLTableModel(QAbstractTableModel):
         return self.realData(row, 3)
 
     def localDomainName(self, row: int) -> str:
-        return self.cacheDomainNames.domain_name(self.realData(row, 3),
-                                                 socket.inet_ntop(sself.realData(row, 2)[0], self.realData(row, 3)))
+        return ipToDomainName(socket.inet_ntop(self.realData(row, 2)[0], self.realData(row, 3)))
 
     def localPort(self, row: int) -> int:
         return self.realData(row, 4)
@@ -257,8 +256,7 @@ class TLTableModel(QAbstractTableModel):
         return self.realData(row, 5)
 
     def remoteDomainName(self, row: int) -> str:
-        return self.cacheDomainNames.domain_name(self.realData(row, 5),
-                                                 socket.inet_ntop(sself.realData(row, 2)[0], self.realData(row, 5)))
+        return ipToDomainName(socket.inet_ntop(self.realData(row, 2)[0], self.realData(row, 5)))
 
     def remotePort(self, row: int) -> int:
         return self.realData(row, 6)
