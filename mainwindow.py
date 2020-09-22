@@ -1,12 +1,11 @@
 from PySide2.QtWidgets import QMainWindow, QMenu, QAction, QMessageBox
 from ui_mainwindow import Ui_MainWindow
 from tltablemodel import TLTableModel
-from PySide2.QtCore import QTimer, Slot, Signal, QThread, Qt
+from PySide2.QtCore import QTimer, Slot, Signal, Qt
 import psutil
 
 
 TIMER_VALUES = (1000, 3000, 5000)
-
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -52,12 +51,8 @@ class MainWindow(QMainWindow):
         menu = QMenu(self)
         # create action for process termination
         terminateAction = QAction("End process...", self)
-        # create action for whois function
-        whoisAction = QAction("Whois...", self)
         menu.addAction(terminateAction)
-        menu.addAction(whoisAction)
         terminateAction.triggered.connect(self.slot_terminate_process)
-        whoisAction.triggered.connect(self.slot_whois_domain)
         # display context menu
         menu.popup(self.ui.tableView.viewport().mapToGlobal(pos))
 
@@ -87,7 +82,3 @@ class MainWindow(QMainWindow):
                 QMessageBox.critical(self, "Process termination", "Access is denied. You need administrator rights!!!",
                                         QMessageBox.Ok)
         self.timer.start()
-
-    @Slot()
-    def slot_whois_domain(self):
-        pass
